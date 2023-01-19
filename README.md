@@ -1,16 +1,27 @@
-# kurisu
+# Kurisu
 
-A new Flutter project.
+Cross-platform anime tracker and anime list manager. 
+This project aims to provide a cross-platform anime tracker and anime list manager. It is currently in development and is not ready for use.
+Freely based on taiga.moe project.
 
-## Getting Started
+## Planned Features
+- Pretty much everything [taiga.moe](https://taiga.moe) has
+- Cross-platform
+- Anime list manager
+- Anime tracker
+- Anime database
+- Anime recommendations
+- Anime news
+- Customizable UI and themes
 
-This project is a starting point for a Flutter application.
+# Credits
+- [taiga.moe](https://taiga.moe)
+- [AniList.co](https://anilist.co)
+- [MyAnimeList.net](https://myanimelist.net)
+- Naming and icon are tributes to [Kurisu Makise](https://en.wikipedia.org/wiki/Kurisu_Makise) from [Steins;Gate](https://en.wikipedia.org/wiki/Steins;Gate) anime series (all rights reserved to their respective owners)
 
-A few resources to get you started if this is your first Flutter project:
+# License
+Kurisu is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Authors
+- [Alispezzate](https://alispezzate.github.io)
