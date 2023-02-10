@@ -40,6 +40,7 @@ dependencies:
   graphql_flutter: ^5.1.2
   intl: ^0.18.0
   dart_code_metrics: ^5.5.1
+  floating_bottom_navigation_bar: ^1.5.2
 
 dev_dependencies:
   flutter_launcher_icons: "^0.11.0"

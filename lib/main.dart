@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 
 String readRepositories = '''
 query (\$userName: String!, \$status: MediaListStatus) {
@@ -117,9 +118,110 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String status = "CURRENT";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      bottomNavigationBar: FloatingNavbar(
+        onTap: (int val) {
+          //returns tab id which is user tapped
+          setState(() {
+            if (val == 0) {
+              status = "CURRENT";
+            } else if (val == 1) {
+              status = "PLANNING";
+            } else if (val == 2) {
+              status = "COMPLETED";
+            } else if (val == 3) {
+              status = "DROPPED";
+            } else if (val == 4) {
+              status = "PAUSED";
+            } else if (val == 5) {
+              status = "REPEATING";
+            }
+          });
+        },
+        currentIndex: 0,
+        items: [
+          FloatingNavbarItem(icon: Icons.home, title: 'Home'),
+          FloatingNavbarItem(icon: Icons.explore, title: 'Explore'),
+          FloatingNavbarItem(icon: Icons.chat_bubble_outline, title: 'Chats'),
+          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            ListTile(
+              title: Text('Now Playing'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('History'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Statistics'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Search'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Seasons'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Torrents'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 3'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                // Then close the drawer.
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -127,9 +229,9 @@ class _MyHomePageState extends State<MyHomePage> {
           options: QueryOptions(
             document: gql(
                 readRepositories), // this is the query string you just created
-            variables: const {
+            variables: {
               'userName': "JohnCenaSsjBlue",
-              'status': "COMPLETED",
+              'status': status,
             },
             pollInterval: const Duration(seconds: 10),
           ),
@@ -148,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
             List? repositories = result.data?['MediaListCollection']['lists'];
 
             if (repositories!.isEmpty) {
-              return const Text('No repositories');
+              return const Text('Empty list');
             }
 
             repositories =
