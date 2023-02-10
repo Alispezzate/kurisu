@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:intl/intl.dart';
 
 String readRepositories = '''
-query (\$userName: String!) {
-  MediaListCollection (userName: \$userName, type: ANIME) {
+query (\$userName: String!, \$status: MediaListStatus) {
+  MediaListCollection (userName: \$userName, type: ANIME, status: \$status) {
     lists {
       entries {
         ...mediaListFragment
@@ -56,6 +57,7 @@ fragment mediaFragment on Media {
     studios { edges { isMain node { name } } }
     nextAiringEpisode { airingAt episode }
 }
+
 ''';
 
 void main() async {
@@ -95,7 +97,7 @@ class MyApp extends StatelessWidget {
     return GraphQLProvider(
       client: client,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Kurisu',
         theme: ThemeData(
           brightness: Brightness.dark,
           primarySwatch: Colors.red,
@@ -122,133 +124,159 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Query(
-        options: QueryOptions(
-          document: gql(
-              readRepositories), // this is the query string you just created
-          variables: const {
-            'userName': "JohnCenaSsjBlue",
-          },
-          pollInterval: const Duration(seconds: 10),
-        ),
-        // Just like in apollo refetch() could be used to manually trigger a refetch
-        // while fetchMore() can be used for pagination purpose
-        builder: (QueryResult result,
-            {VoidCallback? refetch, FetchMore? fetchMore}) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
+          options: QueryOptions(
+            document: gql(
+                readRepositories), // this is the query string you just created
+            variables: const {
+              'userName': "JohnCenaSsjBlue",
+              'status': "COMPLETED",
+            },
+            pollInterval: const Duration(seconds: 10),
+          ),
+          // Just like in apollo refetch() could be used to manually trigger a refetch
+          // while fetchMore() can be used for pagination purpose
+          builder: (QueryResult result,
+              {VoidCallback? refetch, FetchMore? fetchMore}) {
+            if (result.hasException) {
+              return Text(result.exception.toString());
+            }
 
-          if (result.isLoading) {
-            return const Text('Loading');
-          }
+            if (result.isLoading) {
+              return const Text('Loading');
+            }
 
-          List? repositories =
-              result.data?['MediaListCollection']['lists'][0]['entries'];
+            List? repositories = result.data?['MediaListCollection']['lists'];
 
-          if (repositories == null) {
-            return const Text('No repositories');
-          }
+            if (repositories!.isEmpty) {
+              return const Text('No repositories');
+            }
 
-          return ListView.builder(
-              itemCount: repositories.length,
-              itemBuilder: (context, index) {
-                final repository = repositories[index];
+            repositories =
+                result.data?['MediaListCollection']['lists'][0]['entries'];
 
-                return Flexible(
-                  child: DataTable2(
-                    columns: <DataColumn>[
-                      DataColumn(
-                        label: Text(
-                          repository['status'] ?? '',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Season',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Type',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Date started',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Date completed',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Last updated',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Progress',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Score',
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          ' Notes',
-                        ),
-                      ),
-                    ],
-                    rows: const <DataRow>[
-                      DataRow(
-                        cells: <DataCell>[
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                        ],
-                      ),
-                      DataRow(
-                        cells: <DataCell>[
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                        ],
-                      ),
-                      DataRow(
-                        cells: <DataCell>[
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                          DataCell(Text('0')),
-                        ],
-                      ),
-                    ],
+            // return ListView.builder(
+            //     itemCount: repositories.length,
+            //     itemBuilder: (context, index) {
+            // final repository = repositories;
+
+            return DataTable2(
+              columns: const <DataColumn>[
+                DataColumn(
+                  label: Text(
+                    "Status",
                   ),
-                );
-              });
-        },
-      ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Season',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Type',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Date started',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Date completed',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Last updated',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Progress',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Score',
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    ' Notes',
+                  ),
+                ),
+              ],
+              rows: repositories!
+                  .map((entry) => (DataRow2(
+                        cells: <DataCell>[
+                          DataCell(Text(entry['status'])),
+                          DataCell(Text("")),
+                          DataCell(Text(entry['media']['format'])),
+                          DataCell(Text(entry['startedAt']['year'] != null &&
+                                  entry['startedAt']['month'] != null &&
+                                  entry['startedAt']['day'] != null
+                              ? "${entry['startedAt']['year']}-${entry['startedAt']['month']}-${entry['startedAt']['day']}"
+                              : "")),
+                          DataCell(Text(entry['completedAt']['year'] != null &&
+                                  entry['completedAt']['month'] != null &&
+                                  entry['completedAt']['day'] != null
+                              ? "${entry['completedAt']['year']}-${entry['completedAt']['month']}-${entry['completedAt']['day']}"
+                              : "")),
+                          DataCell(Text(entry['updatedAt'] > 0
+                              ? DateFormat("yyyy-MM-dd").format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      entry['updatedAt'] * 1000))
+                              : "")),
+                          DataCell(Text(entry['progress'].toString())),
+                          DataCell(Text(entry['score'].toString())),
+                          DataCell(Text(entry['notes'] ?? '')),
+                        ],
+                      )))
+                  .toList(),
+              // <DataRow>[
+              //   DataRow(
+              //     cells: <DataCell>[
+              //       DataCell(Text(repository[0]['status'])),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //     ],
+              //   ),
+              //   DataRow(
+              //     cells: <DataCell>[
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //     ],
+              //   ),
+              //   DataRow(
+              //     cells: <DataCell>[
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //       DataCell(Text('0')),
+              //     ],
+              //   ),
+              // ],
+            );
+          }),
     );
   }
 }
