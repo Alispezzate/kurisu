@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             ListTile(
-              title: Text('Now Playing'),
+              title: const Text('Now Playing'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -166,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('History'),
+              title: const Text('History'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Statistics'),
+              title: const Text('Statistics'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -184,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Search'),
+              title: const Text('Search'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -193,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Seasons'),
+              title: const Text('Seasons'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Torrents'),
+              title: const Text('Torrents'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Item 3'),
+              title: const Text('Item 3'),
               onTap: () {
                 // Update the state of the app.
                 // ...
@@ -249,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             List? repositories = result.data?['MediaListCollection']['lists'];
 
-            if (repositories!.isEmpty) {
+            if (repositories?.isEmpty ?? true) {
               return const Text('Empty list');
             }
 
@@ -309,33 +309,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ],
-              rows: repositories!
-                  .map((entry) => (DataRow2(
-                        cells: <DataCell>[
-                          DataCell(Text(entry['status'])),
-                          DataCell(Text("")),
-                          DataCell(Text(entry['media']['format'])),
-                          DataCell(Text(entry['startedAt']['year'] != null &&
-                                  entry['startedAt']['month'] != null &&
-                                  entry['startedAt']['day'] != null
-                              ? "${entry['startedAt']['year']}-${entry['startedAt']['month']}-${entry['startedAt']['day']}"
-                              : "")),
-                          DataCell(Text(entry['completedAt']['year'] != null &&
-                                  entry['completedAt']['month'] != null &&
-                                  entry['completedAt']['day'] != null
-                              ? "${entry['completedAt']['year']}-${entry['completedAt']['month']}-${entry['completedAt']['day']}"
-                              : "")),
-                          DataCell(Text(entry['updatedAt'] > 0
-                              ? DateFormat("yyyy-MM-dd").format(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      entry['updatedAt'] * 1000))
-                              : "")),
-                          DataCell(Text(entry['progress'].toString())),
-                          DataCell(Text(entry['score'].toString())),
-                          DataCell(Text(entry['notes'] ?? '')),
-                        ],
-                      )))
-                  .toList(),
+              rows: repositories
+                      ?.map((entry) => (DataRow2(
+                            cells: <DataCell>[
+                              DataCell(Text(entry['status'])),
+                              const DataCell(Text("")),
+                              DataCell(Text(entry['media']['format'])),
+                              DataCell(Text(entry['startedAt']['year'] !=
+                                          null &&
+                                      entry['startedAt']['month'] != null &&
+                                      entry['startedAt']['day'] != null
+                                  ? "${entry['startedAt']['year']}-${entry['startedAt']['month']}-${entry['startedAt']['day']}"
+                                  : "")),
+                              DataCell(Text(entry['completedAt']['year'] !=
+                                          null &&
+                                      entry['completedAt']['month'] != null &&
+                                      entry['completedAt']['day'] != null
+                                  ? "${entry['completedAt']['year']}-${entry['completedAt']['month']}-${entry['completedAt']['day']}"
+                                  : "")),
+                              DataCell(Text(entry['updatedAt'] > 0
+                                  ? DateFormat("yyyy-MM-dd").format(
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          entry['updatedAt'] * 1000))
+                                  : "")),
+                              DataCell(Text(entry['progress'].toString())),
+                              DataCell(Text(entry['score'].toString())),
+                              DataCell(Text(entry['notes'] ?? '')),
+                            ],
+                          )))
+                      .toList() ??
+                  [],
               // <DataRow>[
               //   DataRow(
               //     cells: <DataCell>[
