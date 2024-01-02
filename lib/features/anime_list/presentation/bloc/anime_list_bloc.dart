@@ -22,17 +22,19 @@ class AnimeListBloc extends Bloc<AnimeListEvent, AnimeListState> {
   }
 
   /// Method used to add the [LoadAnimeListEvent] event
-  void loadList() => add(const AnimeListEvent.loadList());
+  void loadList(String status) => add(AnimeListEvent.loadList(status));
 
   FutureOr<void> _onLoadList(
     LoadAnimeListEvent event,
     Emitter<AnimeListState> emit,
-  ) {
+  ) async {
     emit(const AnimeListState.loading());
-    animeListRepository.getAnimeList().then((value) {
-      emit(AnimeListState.loaded(value));
-    }).catchError((error) {
+
+    try {
+      var animeList = await animeListRepository.getAnimeList(event.status);
+      emit(AnimeListState.loaded(animeList));
+    } catch (error) {
       emit(AnimeListState.error(error));
-    });
+    }
   }
 }

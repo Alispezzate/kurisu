@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
 
 import '../models/anilist_anime.dart';
 import '../models/anilist_anime_list.dart';
@@ -12,7 +12,7 @@ abstract class AnimeListRepository {
 
   final GraphQLClient graphqlClient;
 
-  Future<AnimeList> getAnimeList() async {
+  Future<AnimeList> getAnimeList(String status) async {
     throw UnimplementedError();
   }
 }
@@ -25,7 +25,7 @@ class MyAnimeListRepositoryImpl implements AnimeListRepository {
   final GraphQLClient graphqlClient;
 
   @override
-  Future<AnimeList> getAnimeList() async {
+  Future<AnimeList> getAnimeList(String status) async {
     throw UnimplementedError();
   }
 }
@@ -38,88 +38,102 @@ class AniListRepositoryImpl implements AnimeListRepository {
   final GraphQLClient graphqlClient;
 
   @override
-  Future<AnimeList> getAnimeList() async {
+  Future<AnimeList> getAnimeList(String status) async {
     final QueryOptions options = QueryOptions(
       document: gql(readRepositories),
-      //TODO: inject the username and status
-      variables: const <String, dynamic>{
-        'userName': "JohnCenaSsjBlue",
-        'status': "COMPLETED",
+      //TODO: inject the username
+      variables: <String, dynamic>{
+        "userName": "JohnCenaSsjBlue",
+        "status": status,
+        //TODO: load both current and rewatching
       },
     );
+    try {
+      final QueryResult result = await graphqlClient.query(options);
 
-    final QueryResult result = await graphqlClient.query(options);
+      if (result.hasException) {
+        if (kDebugMode) print(result.exception.toString());
+        throw result.exception!;
+      }
 
-    if (result.hasException) {
-      if (kDebugMode) print(result.exception.toString());
-      throw result.exception!;
+      var animeLists = result.data?['MediaListCollection']?['lists'];
+      if (animeLists == null || animeLists.isEmpty) {
+        return const AniList(animeList: []);
+      }
+      final List animeList = animeLists[0]['entries'];
+
+      //map the json to the model
+      return AniList(
+        animeList: animeList.map((e) => AniListAnime.fromJson(e)).toList(),
+      );
+    } on PartialDataException catch (e) {
+      // Gestisci l'eccezione in modo specifico per ottenere ulteriori dettagli
+      if (kDebugMode) print("PartialDataException: ${e.path}");
+      // Altri passaggi di gestione dell'eccezione, se necessario...
+      return Future.error(e);
+    } catch (e) {
+      // Gestione di altre eccezioni
+      if (kDebugMode) print("Altro tipo di eccezione: $e");
+      return Future.error(e);
     }
-
-    final List? animeList = result.data?['MediaListCollection']['lists'][0]['entries'];
-
-    //map the json to the model
-    return AniList(
-      animeList: animeList!.map((e) => AniListAnime.fromJson(e)).toList(),
-    );
   }
 }
 
 String readRepositories =
     '''
-query (\$userName: String!, \$status: MediaListStatus) {
-  MediaListCollection (userName: \$userName, type: ANIME, status: \$status) {
-    lists {
-      entries {
-        ...mediaListFragment
+  query (\$userName: String!, \$status: MediaListStatus) {
+    MediaListCollection (userName: \$userName, type: ANIME, status: \$status) {
+      lists {
+        entries {
+          ...mediaListFragment
+        }
       }
     }
   }
-}
 
-fragment mediaListFragment on MediaList {
-    id
-    status
-    score(format: POINT_100)
-    progress
-    repeat
-    private
-    notes
-    startedAt { year month day }
-    completedAt { year month day }
-    updatedAt
-  media {
-    ...mediaFragment
-  }
-}
-
-fragment mediaFragment on Media {
-    id
-    idMal
-    title {
-    romaji(stylised: true)
-    english(stylised: true)
-    native(stylised: true)
-    userPreferred
+  fragment mediaListFragment on MediaList {
+      id
+      status
+      score(format: POINT_100)
+      progress
+      repeat
+      private
+      notes
+      startedAt { year month day }
+      completedAt { year month day }
+      updatedAt
+    media {
+      ...mediaFragment
     }
-    format
-    status
-    description
-    startDate { year month day }
-    endDate { year month day }
-    episodes
-    duration
-    countryOfOrigin
-    trailer { id site }
-    updatedAt
-    coverImage { large }
-    genres
-    season
-    seasonYear
-    synonyms
-    averageScore
-    popularity
-    studios { edges { isMain node { name } } }
-    nextAiringEpisode { airingAt episode }
-}
+  }
 
+  fragment mediaFragment on Media {
+      id
+      idMal
+      title {
+      romaji(stylised: true)
+      english(stylised: true)
+      native(stylised: true)
+      userPreferred
+      }
+      format
+      status
+      description
+      startDate { year month day }
+      endDate { year month day }
+      episodes
+      duration
+      countryOfOrigin
+      trailer { id site }
+      updatedAt
+      coverImage { large }
+      genres
+      season
+      seasonYear
+      synonyms
+      averageScore
+      popularity
+      studios { edges { isMain node { name } } }
+      nextAiringEpisode { airingAt episode }
+  }
 ''';

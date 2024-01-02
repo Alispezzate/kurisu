@@ -7,4 +7,10 @@ final List<BlocProvider> _blocs = [
       animeListRepository: context.read<AnimeListRepository>(),
     ),
   ),
+  //SignInBloc
+  BlocProvider<SignInBloc>(
+    create: (context) => SignInBloc(
+      authenticationRepository: context.read<AuthenticationRepository>(),
+    ),
+  ),
 ];

@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:graphql/client.dart';
+import 'package:kurisu/features/sign_in/data/repositories/authentication_repository.dart';
 import 'package:pine/pine.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../features/anime_list/presentation/bloc/anime_list_bloc.dart';
 import '../features/anime_list/data/repositories/anime_list_repository.dart';
+import '../features/sign_in/presentation/bloc/sign_in_bloc.dart';
 
 part 'blocs.dart';
 

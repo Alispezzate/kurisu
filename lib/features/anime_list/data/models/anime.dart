@@ -175,7 +175,6 @@ class Title {
     english = json['english'];
     native = json['native'];
     userPreferred = json['userPreferred'];
-    // userPreferred = json['romaji']; //TODO: change this to userPreferred
   }
 
   Map<String, dynamic> toJson() {

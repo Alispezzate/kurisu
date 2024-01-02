@@ -2,10 +2,10 @@
 
 Cross-platform anime tracker and anime list manager. 
 This project aims to provide a cross-platform anime tracker and anime list manager. It is currently in development and is not ready for use.
-Freely based on taiga.moe project.
+Loosely based on taiga.moe project.
 
 ## Planned Features
-- Pretty much everything [taiga.moe](https://taiga.moe) has
+- Pretty much everything [taiga.moe](https://taiga.moe) has (support for Anilist will be prioritized as MyAnimeList API looks like a mess as of now) 
 - Cross-platform
 - Anime list manager
 - Anime tracker
