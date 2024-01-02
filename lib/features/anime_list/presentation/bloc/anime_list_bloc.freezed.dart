@@ -69,25 +69,25 @@ class _$AnimeListEventCopyWithImpl<$Res, $Val extends AnimeListEvent>
 }
 
 /// @nodoc
-abstract class _$$LoadAnimeListEventCopyWith<$Res> {
-  factory _$$LoadAnimeListEventCopyWith(_$LoadAnimeListEvent value,
-          $Res Function(_$LoadAnimeListEvent) then) =
-      __$$LoadAnimeListEventCopyWithImpl<$Res>;
+abstract class _$$LoadAnimeListEventImplCopyWith<$Res> {
+  factory _$$LoadAnimeListEventImplCopyWith(_$LoadAnimeListEventImpl value,
+          $Res Function(_$LoadAnimeListEventImpl) then) =
+      __$$LoadAnimeListEventImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadAnimeListEventCopyWithImpl<$Res>
-    extends _$AnimeListEventCopyWithImpl<$Res, _$LoadAnimeListEvent>
-    implements _$$LoadAnimeListEventCopyWith<$Res> {
-  __$$LoadAnimeListEventCopyWithImpl(
-      _$LoadAnimeListEvent _value, $Res Function(_$LoadAnimeListEvent) _then)
+class __$$LoadAnimeListEventImplCopyWithImpl<$Res>
+    extends _$AnimeListEventCopyWithImpl<$Res, _$LoadAnimeListEventImpl>
+    implements _$$LoadAnimeListEventImplCopyWith<$Res> {
+  __$$LoadAnimeListEventImplCopyWithImpl(_$LoadAnimeListEventImpl _value,
+      $Res Function(_$LoadAnimeListEventImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$LoadAnimeListEvent implements LoadAnimeListEvent {
-  const _$LoadAnimeListEvent();
+class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
+  const _$LoadAnimeListEventImpl();
 
   @override
   String toString() {
@@ -95,9 +95,9 @@ class _$LoadAnimeListEvent implements LoadAnimeListEvent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadAnimeListEvent);
+        (other.runtimeType == runtimeType && other is _$LoadAnimeListEventImpl);
   }
 
   @override
@@ -161,7 +161,7 @@ class _$LoadAnimeListEvent implements LoadAnimeListEvent {
 }
 
 abstract class LoadAnimeListEvent implements AnimeListEvent {
-  const factory LoadAnimeListEvent() = _$LoadAnimeListEvent;
+  const factory LoadAnimeListEvent() = _$LoadAnimeListEventImpl;
 }
 
 /// @nodoc
@@ -169,22 +169,22 @@ mixin _$AnimeListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function() error,
+    required TResult Function(AnimeList animeList) loaded,
+    required TResult Function(dynamic error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
-    TResult? Function()? error,
+    TResult? Function(AnimeList animeList)? loaded,
+    TResult? Function(dynamic error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function()? error,
+    TResult Function(AnimeList animeList)? loaded,
+    TResult Function(dynamic error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -231,25 +231,26 @@ class _$AnimeListStateCopyWithImpl<$Res, $Val extends AnimeListState>
 }
 
 /// @nodoc
-abstract class _$$_LoadingAnimeListStateCopyWith<$Res> {
-  factory _$$_LoadingAnimeListStateCopyWith(_$_LoadingAnimeListState value,
-          $Res Function(_$_LoadingAnimeListState) then) =
-      __$$_LoadingAnimeListStateCopyWithImpl<$Res>;
+abstract class _$$LoadingAnimeListStateImplCopyWith<$Res> {
+  factory _$$LoadingAnimeListStateImplCopyWith(
+          _$LoadingAnimeListStateImpl value,
+          $Res Function(_$LoadingAnimeListStateImpl) then) =
+      __$$LoadingAnimeListStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadingAnimeListStateCopyWithImpl<$Res>
-    extends _$AnimeListStateCopyWithImpl<$Res, _$_LoadingAnimeListState>
-    implements _$$_LoadingAnimeListStateCopyWith<$Res> {
-  __$$_LoadingAnimeListStateCopyWithImpl(_$_LoadingAnimeListState _value,
-      $Res Function(_$_LoadingAnimeListState) _then)
+class __$$LoadingAnimeListStateImplCopyWithImpl<$Res>
+    extends _$AnimeListStateCopyWithImpl<$Res, _$LoadingAnimeListStateImpl>
+    implements _$$LoadingAnimeListStateImplCopyWith<$Res> {
+  __$$LoadingAnimeListStateImplCopyWithImpl(_$LoadingAnimeListStateImpl _value,
+      $Res Function(_$LoadingAnimeListStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoadingAnimeListState implements _LoadingAnimeListState {
-  const _$_LoadingAnimeListState();
+class _$LoadingAnimeListStateImpl implements _LoadingAnimeListState {
+  const _$LoadingAnimeListStateImpl();
 
   @override
   String toString() {
@@ -257,9 +258,10 @@ class _$_LoadingAnimeListState implements _LoadingAnimeListState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadingAnimeListState);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingAnimeListStateImpl);
   }
 
   @override
@@ -269,8 +271,8 @@ class _$_LoadingAnimeListState implements _LoadingAnimeListState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function() error,
+    required TResult Function(AnimeList animeList) loaded,
+    required TResult Function(dynamic error) error,
   }) {
     return loading();
   }
@@ -279,8 +281,8 @@ class _$_LoadingAnimeListState implements _LoadingAnimeListState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
-    TResult? Function()? error,
+    TResult? Function(AnimeList animeList)? loaded,
+    TResult? Function(dynamic error)? error,
   }) {
     return loading?.call();
   }
@@ -289,8 +291,8 @@ class _$_LoadingAnimeListState implements _LoadingAnimeListState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function()? error,
+    TResult Function(AnimeList animeList)? loaded,
+    TResult Function(dynamic error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -335,74 +337,103 @@ class _$_LoadingAnimeListState implements _LoadingAnimeListState {
 }
 
 abstract class _LoadingAnimeListState implements AnimeListState {
-  const factory _LoadingAnimeListState() = _$_LoadingAnimeListState;
+  const factory _LoadingAnimeListState() = _$LoadingAnimeListStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedAnimeListStateCopyWith<$Res> {
-  factory _$$_LoadedAnimeListStateCopyWith(_$_LoadedAnimeListState value,
-          $Res Function(_$_LoadedAnimeListState) then) =
-      __$$_LoadedAnimeListStateCopyWithImpl<$Res>;
+abstract class _$$LoadedAnimeListStateImplCopyWith<$Res> {
+  factory _$$LoadedAnimeListStateImplCopyWith(_$LoadedAnimeListStateImpl value,
+          $Res Function(_$LoadedAnimeListStateImpl) then) =
+      __$$LoadedAnimeListStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({AnimeList animeList});
 }
 
 /// @nodoc
-class __$$_LoadedAnimeListStateCopyWithImpl<$Res>
-    extends _$AnimeListStateCopyWithImpl<$Res, _$_LoadedAnimeListState>
-    implements _$$_LoadedAnimeListStateCopyWith<$Res> {
-  __$$_LoadedAnimeListStateCopyWithImpl(_$_LoadedAnimeListState _value,
-      $Res Function(_$_LoadedAnimeListState) _then)
+class __$$LoadedAnimeListStateImplCopyWithImpl<$Res>
+    extends _$AnimeListStateCopyWithImpl<$Res, _$LoadedAnimeListStateImpl>
+    implements _$$LoadedAnimeListStateImplCopyWith<$Res> {
+  __$$LoadedAnimeListStateImplCopyWithImpl(_$LoadedAnimeListStateImpl _value,
+      $Res Function(_$LoadedAnimeListStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? animeList = null,
+  }) {
+    return _then(_$LoadedAnimeListStateImpl(
+      null == animeList
+          ? _value.animeList
+          : animeList // ignore: cast_nullable_to_non_nullable
+              as AnimeList,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_LoadedAnimeListState implements _LoadedAnimeListState {
-  const _$_LoadedAnimeListState();
+class _$LoadedAnimeListStateImpl implements _LoadedAnimeListState {
+  const _$LoadedAnimeListStateImpl(this.animeList);
+
+  @override
+  final AnimeList animeList;
 
   @override
   String toString() {
-    return 'AnimeListState.loaded()';
+    return 'AnimeListState.loaded(animeList: $animeList)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadedAnimeListState);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedAnimeListStateImpl &&
+            (identical(other.animeList, animeList) ||
+                other.animeList == animeList));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, animeList);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedAnimeListStateImplCopyWith<_$LoadedAnimeListStateImpl>
+      get copyWith =>
+          __$$LoadedAnimeListStateImplCopyWithImpl<_$LoadedAnimeListStateImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function() error,
+    required TResult Function(AnimeList animeList) loaded,
+    required TResult Function(dynamic error) error,
   }) {
-    return loaded();
+    return loaded(animeList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
-    TResult? Function()? error,
+    TResult? Function(AnimeList animeList)? loaded,
+    TResult? Function(dynamic error)? error,
   }) {
-    return loaded?.call();
+    return loaded?.call(animeList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function()? error,
+    TResult Function(AnimeList animeList)? loaded,
+    TResult Function(dynamic error)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(animeList);
     }
     return orElse();
   }
@@ -443,74 +474,108 @@ class _$_LoadedAnimeListState implements _LoadedAnimeListState {
 }
 
 abstract class _LoadedAnimeListState implements AnimeListState {
-  const factory _LoadedAnimeListState() = _$_LoadedAnimeListState;
+  const factory _LoadedAnimeListState(final AnimeList animeList) =
+      _$LoadedAnimeListStateImpl;
+
+  AnimeList get animeList;
+  @JsonKey(ignore: true)
+  _$$LoadedAnimeListStateImplCopyWith<_$LoadedAnimeListStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorAnimeListStateCopyWith<$Res> {
-  factory _$$_ErrorAnimeListStateCopyWith(_$_ErrorAnimeListState value,
-          $Res Function(_$_ErrorAnimeListState) then) =
-      __$$_ErrorAnimeListStateCopyWithImpl<$Res>;
+abstract class _$$ErrorAnimeListStateImplCopyWith<$Res> {
+  factory _$$ErrorAnimeListStateImplCopyWith(_$ErrorAnimeListStateImpl value,
+          $Res Function(_$ErrorAnimeListStateImpl) then) =
+      __$$ErrorAnimeListStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({dynamic error});
 }
 
 /// @nodoc
-class __$$_ErrorAnimeListStateCopyWithImpl<$Res>
-    extends _$AnimeListStateCopyWithImpl<$Res, _$_ErrorAnimeListState>
-    implements _$$_ErrorAnimeListStateCopyWith<$Res> {
-  __$$_ErrorAnimeListStateCopyWithImpl(_$_ErrorAnimeListState _value,
-      $Res Function(_$_ErrorAnimeListState) _then)
+class __$$ErrorAnimeListStateImplCopyWithImpl<$Res>
+    extends _$AnimeListStateCopyWithImpl<$Res, _$ErrorAnimeListStateImpl>
+    implements _$$ErrorAnimeListStateImplCopyWith<$Res> {
+  __$$ErrorAnimeListStateImplCopyWithImpl(_$ErrorAnimeListStateImpl _value,
+      $Res Function(_$ErrorAnimeListStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(_$ErrorAnimeListStateImpl(
+      freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_ErrorAnimeListState implements _ErrorAnimeListState {
-  const _$_ErrorAnimeListState();
+class _$ErrorAnimeListStateImpl implements _ErrorAnimeListState {
+  const _$ErrorAnimeListStateImpl(this.error);
+
+  @override
+  final dynamic error;
 
   @override
   String toString() {
-    return 'AnimeListState.error()';
+    return 'AnimeListState.error(error: $error)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_ErrorAnimeListState);
+        (other.runtimeType == runtimeType &&
+            other is _$ErrorAnimeListStateImpl &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ErrorAnimeListStateImplCopyWith<_$ErrorAnimeListStateImpl> get copyWith =>
+      __$$ErrorAnimeListStateImplCopyWithImpl<_$ErrorAnimeListStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function() error,
+    required TResult Function(AnimeList animeList) loaded,
+    required TResult Function(dynamic error) error,
   }) {
-    return error();
+    return error(this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function()? loaded,
-    TResult? Function()? error,
+    TResult? Function(AnimeList animeList)? loaded,
+    TResult? Function(dynamic error)? error,
   }) {
-    return error?.call();
+    return error?.call(this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function()? error,
+    TResult Function(AnimeList animeList)? loaded,
+    TResult Function(dynamic error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(this.error);
     }
     return orElse();
   }
@@ -551,5 +616,11 @@ class _$_ErrorAnimeListState implements _ErrorAnimeListState {
 }
 
 abstract class _ErrorAnimeListState implements AnimeListState {
-  const factory _ErrorAnimeListState() = _$_ErrorAnimeListState;
+  const factory _ErrorAnimeListState(final dynamic error) =
+      _$ErrorAnimeListStateImpl;
+
+  dynamic get error;
+  @JsonKey(ignore: true)
+  _$$ErrorAnimeListStateImplCopyWith<_$ErrorAnimeListStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

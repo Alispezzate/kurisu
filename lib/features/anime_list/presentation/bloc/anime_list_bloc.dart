@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:async';
 
-import 'package:kurisu/repositories/anime_list_repository.dart';
+import 'package:kurisu/features/anime_list/data/repositories/anime_list_repository.dart';
+
+import '../../data/models/anime_list.dart';
 
 part 'anime_list_event.dart';
 
@@ -26,7 +28,12 @@ class AnimeListBloc extends Bloc<AnimeListEvent, AnimeListState> {
     LoadAnimeListEvent event,
     Emitter<AnimeListState> emit,
   ) {
-    emit(const AnimeListState.loaded());
+    emit(const AnimeListState.loading());
     //TODO: map LoadAnimeListEvent to AnimeListState states
+    animeListRepository.getAnimeList().then((value) {
+      emit(AnimeListState.loaded(value));
+    }).catchError((error) {
+      emit(AnimeListState.error(error));
+    });
   }
 }
