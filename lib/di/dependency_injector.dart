@@ -5,6 +5,7 @@ import 'package:kurisu/features/sign_in/data/repositories/authentication_reposit
 import 'package:pine/pine.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:talker/talker.dart';
 
 import '../features/anime_list/presentation/bloc/anime_list_bloc.dart';
 import '../features/anime_list/data/repositories/anime_list_repository.dart';

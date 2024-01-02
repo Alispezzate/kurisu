@@ -8,6 +8,9 @@ final List<SingleChildWidget> _providers = [
       cache: GraphQLCache(store: HiveStore()),
     ),
   ),
+  Provider<Talker>(
+    create: (context) => Talker(),
+  ),
 ];
 
 final HttpLink httpLink = HttpLink(

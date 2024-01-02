@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:graphql/client.dart';
+import 'package:talker/talker.dart';
 
 import '../models/anilist_anime.dart';
 import '../models/anilist_anime_list.dart';
@@ -8,9 +9,10 @@ import '../models/anime_list.dart';
 /// Abstract class of AnimeListRepository
 abstract class AnimeListRepository {
   //define graphqlclient in constructor
-  const AnimeListRepository({required this.graphqlClient});
+  const AnimeListRepository({required this.graphqlClient, required this.logger});
 
   final GraphQLClient graphqlClient;
+  final Talker logger;
 
   Future<AnimeList> getAnimeList(String status) async {
     throw UnimplementedError();
@@ -19,10 +21,12 @@ abstract class AnimeListRepository {
 
 /// Implementation of the base interface AnimeListRepository for MyAnimeList
 class MyAnimeListRepositoryImpl implements AnimeListRepository {
-  const MyAnimeListRepositoryImpl({required this.graphqlClient});
+  const MyAnimeListRepositoryImpl({required this.graphqlClient, required this.logger});
 
   @override
   final GraphQLClient graphqlClient;
+  @override
+  final Talker logger;
 
   @override
   Future<AnimeList> getAnimeList(String status) async {
@@ -32,10 +36,12 @@ class MyAnimeListRepositoryImpl implements AnimeListRepository {
 
 /// Implementation of the base interface AnimeListRepository for AniList
 class AniListRepositoryImpl implements AnimeListRepository {
-  const AniListRepositoryImpl({required this.graphqlClient});
+  const AniListRepositoryImpl({required this.graphqlClient, required this.logger});
 
   @override
   final GraphQLClient graphqlClient;
+  @override
+  final Talker logger;
 
   @override
   Future<AnimeList> getAnimeList(String status) async {
@@ -52,7 +58,7 @@ class AniListRepositoryImpl implements AnimeListRepository {
       final QueryResult result = await graphqlClient.query(options);
 
       if (result.hasException) {
-        if (kDebugMode) print(result.exception.toString());
+        logger.error(result.exception.toString());
         throw result.exception!;
       }
 
@@ -68,12 +74,12 @@ class AniListRepositoryImpl implements AnimeListRepository {
       );
     } on PartialDataException catch (e) {
       // Gestisci l'eccezione in modo specifico per ottenere ulteriori dettagli
-      if (kDebugMode) print("PartialDataException: ${e.path}");
+      logger.error("PartialDataException: ${e.path}");
       // Altri passaggi di gestione dell'eccezione, se necessario...
       return Future.error(e);
     } catch (e) {
       // Gestione di altre eccezioni
-      if (kDebugMode) print("Altro tipo di eccezione: $e");
+      logger.error("Altro tipo di eccezione: $e");
       return Future.error(e);
     }
   }
