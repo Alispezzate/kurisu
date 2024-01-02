@@ -29,7 +29,6 @@ class AnimeListBloc extends Bloc<AnimeListEvent, AnimeListState> {
     Emitter<AnimeListState> emit,
   ) {
     emit(const AnimeListState.loading());
-    //TODO: map LoadAnimeListEvent to AnimeListState states
     animeListRepository.getAnimeList().then((value) {
       emit(AnimeListState.loaded(value));
     }).catchError((error) {

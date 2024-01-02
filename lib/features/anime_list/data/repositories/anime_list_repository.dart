@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import '../models/anime.dart';
+import '../models/anilist_anime.dart';
+import '../models/anilist_anime_list.dart';
 import '../models/anime_list.dart';
 
 /// Abstract class of AnimeListRepository
@@ -13,7 +15,6 @@ abstract class AnimeListRepository {
   Future<AnimeList> getAnimeList() async {
     throw UnimplementedError();
   }
-  //TODO: Add your methods
 }
 
 /// Implementation of the base interface AnimeListRepository for MyAnimeList
@@ -41,7 +42,7 @@ class AniListRepositoryImpl implements AnimeListRepository {
     final QueryOptions options = QueryOptions(
       document: gql(readRepositories),
       //TODO: inject the username and status
-      variables: <String, dynamic>{
+      variables: const <String, dynamic>{
         'userName': "JohnCenaSsjBlue",
         'status': "COMPLETED",
       },
@@ -50,7 +51,7 @@ class AniListRepositoryImpl implements AnimeListRepository {
     final QueryResult result = await graphqlClient.query(options);
 
     if (result.hasException) {
-      print(result.exception.toString());
+      if (kDebugMode) print(result.exception.toString());
       throw result.exception!;
     }
 
@@ -58,12 +59,13 @@ class AniListRepositoryImpl implements AnimeListRepository {
 
     //map the json to the model
     return AniList(
-      animeList: animeList!.map((e) => AniListAnime.fromJson(e['media'])).toList(),
+      animeList: animeList!.map((e) => AniListAnime.fromJson(e)).toList(),
     );
   }
 }
 
-String readRepositories = '''
+String readRepositories =
+    '''
 query (\$userName: String!, \$status: MediaListStatus) {
   MediaListCollection (userName: \$userName, type: ANIME, status: \$status) {
     lists {
@@ -111,6 +113,8 @@ fragment mediaFragment on Media {
     updatedAt
     coverImage { large }
     genres
+    season
+    seasonYear
     synonyms
     averageScore
     popularity
