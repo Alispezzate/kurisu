@@ -16,42 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AnimeListEvent {
-  String get status => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String status) loadList,
+    required TResult Function(Anime anime) saveAnime,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String status)? loadList,
+    TResult? Function(Anime anime)? saveAnime,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String status)? loadList,
+    TResult Function(Anime anime)? saveAnime,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadAnimeListEvent value) loadList,
+    required TResult Function(SaveAnimeEvent value) saveAnime,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadAnimeListEvent value)? loadList,
+    TResult? Function(SaveAnimeEvent value)? saveAnime,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadAnimeListEvent value)? loadList,
+    TResult Function(SaveAnimeEvent value)? saveAnime,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AnimeListEventCopyWith<AnimeListEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -60,8 +61,6 @@ abstract class $AnimeListEventCopyWith<$Res> {
   factory $AnimeListEventCopyWith(
           AnimeListEvent value, $Res Function(AnimeListEvent) then) =
       _$AnimeListEventCopyWithImpl<$Res, AnimeListEvent>;
-  @useResult
-  $Res call({String status});
 }
 
 /// @nodoc
@@ -73,28 +72,13 @@ class _$AnimeListEventCopyWithImpl<$Res, $Val extends AnimeListEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-  }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$LoadAnimeListEventImplCopyWith<$Res>
-    implements $AnimeListEventCopyWith<$Res> {
+abstract class _$$LoadAnimeListEventImplCopyWith<$Res> {
   factory _$$LoadAnimeListEventImplCopyWith(_$LoadAnimeListEventImpl value,
           $Res Function(_$LoadAnimeListEventImpl) then) =
       __$$LoadAnimeListEventImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String status});
 }
@@ -156,6 +140,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String status) loadList,
+    required TResult Function(Anime anime) saveAnime,
   }) {
     return loadList(status);
   }
@@ -164,6 +149,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String status)? loadList,
+    TResult? Function(Anime anime)? saveAnime,
   }) {
     return loadList?.call(status);
   }
@@ -172,6 +158,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String status)? loadList,
+    TResult Function(Anime anime)? saveAnime,
     required TResult orElse(),
   }) {
     if (loadList != null) {
@@ -184,6 +171,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadAnimeListEvent value) loadList,
+    required TResult Function(SaveAnimeEvent value) saveAnime,
   }) {
     return loadList(this);
   }
@@ -192,6 +180,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadAnimeListEvent value)? loadList,
+    TResult? Function(SaveAnimeEvent value)? saveAnime,
   }) {
     return loadList?.call(this);
   }
@@ -200,6 +189,7 @@ class _$LoadAnimeListEventImpl implements LoadAnimeListEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadAnimeListEvent value)? loadList,
+    TResult Function(SaveAnimeEvent value)? saveAnime,
     required TResult orElse(),
   }) {
     if (loadList != null) {
@@ -213,11 +203,144 @@ abstract class LoadAnimeListEvent implements AnimeListEvent {
   const factory LoadAnimeListEvent(final String status) =
       _$LoadAnimeListEventImpl;
 
-  @override
   String get status;
-  @override
   @JsonKey(ignore: true)
   _$$LoadAnimeListEventImplCopyWith<_$LoadAnimeListEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SaveAnimeEventImplCopyWith<$Res> {
+  factory _$$SaveAnimeEventImplCopyWith(_$SaveAnimeEventImpl value,
+          $Res Function(_$SaveAnimeEventImpl) then) =
+      __$$SaveAnimeEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Anime anime});
+}
+
+/// @nodoc
+class __$$SaveAnimeEventImplCopyWithImpl<$Res>
+    extends _$AnimeListEventCopyWithImpl<$Res, _$SaveAnimeEventImpl>
+    implements _$$SaveAnimeEventImplCopyWith<$Res> {
+  __$$SaveAnimeEventImplCopyWithImpl(
+      _$SaveAnimeEventImpl _value, $Res Function(_$SaveAnimeEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? anime = freezed,
+  }) {
+    return _then(_$SaveAnimeEventImpl(
+      freezed == anime
+          ? _value.anime
+          : anime // ignore: cast_nullable_to_non_nullable
+              as Anime,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SaveAnimeEventImpl implements SaveAnimeEvent {
+  const _$SaveAnimeEventImpl(this.anime);
+
+  @override
+  final Anime anime;
+
+  @override
+  String toString() {
+    return 'AnimeListEvent.saveAnime(anime: $anime)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SaveAnimeEventImpl &&
+            const DeepCollectionEquality().equals(other.anime, anime));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(anime));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SaveAnimeEventImplCopyWith<_$SaveAnimeEventImpl> get copyWith =>
+      __$$SaveAnimeEventImplCopyWithImpl<_$SaveAnimeEventImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String status) loadList,
+    required TResult Function(Anime anime) saveAnime,
+  }) {
+    return saveAnime(anime);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String status)? loadList,
+    TResult? Function(Anime anime)? saveAnime,
+  }) {
+    return saveAnime?.call(anime);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String status)? loadList,
+    TResult Function(Anime anime)? saveAnime,
+    required TResult orElse(),
+  }) {
+    if (saveAnime != null) {
+      return saveAnime(anime);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadAnimeListEvent value) loadList,
+    required TResult Function(SaveAnimeEvent value) saveAnime,
+  }) {
+    return saveAnime(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadAnimeListEvent value)? loadList,
+    TResult? Function(SaveAnimeEvent value)? saveAnime,
+  }) {
+    return saveAnime?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadAnimeListEvent value)? loadList,
+    TResult Function(SaveAnimeEvent value)? saveAnime,
+    required TResult orElse(),
+  }) {
+    if (saveAnime != null) {
+      return saveAnime(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SaveAnimeEvent implements AnimeListEvent {
+  const factory SaveAnimeEvent(final Anime anime) = _$SaveAnimeEventImpl;
+
+  Anime get anime;
+  @JsonKey(ignore: true)
+  _$$SaveAnimeEventImplCopyWith<_$SaveAnimeEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

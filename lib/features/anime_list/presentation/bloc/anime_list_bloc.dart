@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:kurisu/features/anime_list/data/repositories/anime_list_repository.dart';
 
+import '../../data/models/anime.dart';
 import '../../data/models/anime_list.dart';
 
 part 'anime_list_event.dart';
@@ -19,6 +20,7 @@ class AnimeListBloc extends Bloc<AnimeListEvent, AnimeListState> {
   /// Create a new instance of [AnimeListBloc].
   AnimeListBloc({required this.animeListRepository}) : super(const AnimeListState.loading()) {
     on<LoadAnimeListEvent>(_onLoadList);
+    on<SaveAnimeEvent>(_onSaveAnime);
   }
 
   /// Method used to add the [LoadAnimeListEvent] event
@@ -31,8 +33,25 @@ class AnimeListBloc extends Bloc<AnimeListEvent, AnimeListState> {
     emit(const AnimeListState.loading());
 
     try {
-      var animeList = await animeListRepository.getAnimeList(event.status);
+      AnimeList animeList = await animeListRepository.getAnimeList(event.status);
       emit(AnimeListState.loaded(animeList));
+    } catch (error) {
+      emit(AnimeListState.error(error));
+    }
+  }
+
+  /// Method used to add the [SaveAnimeEvent] event
+  void saveAnime(Anime anime) => add(AnimeListEvent.saveAnime(anime));
+
+  FutureOr<void> _onSaveAnime(
+    SaveAnimeEvent event,
+    Emitter<AnimeListState> emit,
+  ) async {
+    // emit(const AnimeListState.loading());
+
+    try {
+      await animeListRepository.saveAnime(event.anime);
+      // emit(const AnimeListState.loading());
     } catch (error) {
       emit(AnimeListState.error(error));
     }

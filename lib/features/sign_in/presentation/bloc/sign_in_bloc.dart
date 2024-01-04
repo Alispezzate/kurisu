@@ -15,17 +15,64 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final AuthenticationRepository authenticationRepository;
 
   /// Create a new instance of [SignInBloc].
-  SignInBloc({required this.authenticationRepository}) : super(const SignInState.performing()) {
+  SignInBloc({required this.authenticationRepository}) : super(const SignInState.idle()) {
     on<PerformSignInEvent>(_onPerform);
+    on<SignOutSignInEvent>(_onSignOut);
+    on<CheckSignInEvent>(_onCheck);
   }
 
   /// Method used to add the [PerformSignInEvent] event
-  void perform() => add(const SignInEvent.perform());
+  void perform(String token, String username) => add(SignInEvent.perform(token, username));
 
-  FutureOr<void> _onPerform(
+  Future<FutureOr<void>> _onPerform(
     PerformSignInEvent event,
     Emitter<SignInState> emit,
-  ) {
-    //TODO: map PerformSignInEvent to SignInState states
+  ) async {
+    emit(const SignInState.performing());
+
+    try {
+      await authenticationRepository.signIn(event.token, event.username);
+      emit(const SignInState.performed());
+    } catch (error) {
+      emit(SignInState.error(error.toString()));
+    }
+  }
+
+  /// Method used to add the [CheckSignInEvent] event
+  void check() => add(const SignInEvent.check());
+
+  Future<FutureOr<void>> _onCheck(
+    CheckSignInEvent event,
+    Emitter<SignInState> emit,
+  ) async {
+    emit(const SignInState.performing());
+
+    try {
+      bool isSignedIn = await authenticationRepository.isSignedIn();
+      if (isSignedIn) {
+        emit(const SignInState.performed());
+      } else {
+        emit(const SignInState.idle());
+      }
+    } catch (error) {
+      emit(SignInState.error(error.toString()));
+    }
+  }
+
+  /// Method used to add the [SignOutSignInEvent] event
+  void signOut() => add(const SignInEvent.signOut());
+
+  Future<FutureOr<void>> _onSignOut(
+    SignOutSignInEvent event,
+    Emitter<SignInState> emit,
+  ) async {
+    emit(const SignInState.performing());
+
+    try {
+      await authenticationRepository.signOut();
+      emit(const SignInState.idle());
+    } catch (error) {
+      emit(SignInState.error(error.toString()));
+    }
   }
 }

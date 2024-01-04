@@ -1,10 +1,25 @@
 part of 'dependency_injector.dart';
 
 final List<SingleChildWidget> _providers = [
-  // GraphQL
+  Provider<HttpLink>(
+    create: (context) => HttpLink(
+      'https://graphql.anilist.co',
+    ),
+  ),
+  Provider<AuthLink>(
+    create: (context) => AuthLink(
+      getToken: () async {
+        const storage = FlutterSecureStorage();
+        return 'Bearer ${await storage.read(key: accessTokenKey) ?? ''}'; //TODO: find a better way to do this
+      },
+    ),
+  ),
+  Provider<Link>(
+    create: (context) => context.read<AuthLink>().concat(context.read<HttpLink>()),
+  ),
   Provider<GraphQLClient>(
     create: (context) => GraphQLClient(
-      link: link,
+      link: context.read<Link>(),
       cache: GraphQLCache(store: HiveStore()),
     ),
   ),
@@ -12,15 +27,3 @@ final List<SingleChildWidget> _providers = [
     create: (context) => Talker(),
   ),
 ];
-
-final HttpLink httpLink = HttpLink(
-  'https://graphql.anilist.co',
-);
-
-final AuthLink authLink = AuthLink(
-  getToken: () async => null,
-  // OR
-  // getToken: () => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
-);
-
-final Link link = authLink.concat(httpLink);

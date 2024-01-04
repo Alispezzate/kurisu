@@ -8,5 +8,5 @@ class SignInState with _$SignInState {
 
   const factory SignInState.performed() = _PerformedSignInState;
 
-  const factory SignInState.error() = _ErrorSignInState;
+  const factory SignInState.error(String error) = _ErrorSignInState;
 }

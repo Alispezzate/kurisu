@@ -1,145 +1,24 @@
-import 'package:flutter/foundation.dart';
 import 'package:graphql/client.dart';
 import 'package:talker/talker.dart';
 
-import '../models/anilist_anime.dart';
-import '../models/anilist_anime_list.dart';
+import '../../../sign_in/data/repositories/authentication_repository.dart';
+import '../models/anime.dart';
 import '../models/anime_list.dart';
 
 /// Abstract class of AnimeListRepository
 abstract class AnimeListRepository {
   //define graphqlclient in constructor
-  const AnimeListRepository({required this.graphqlClient, required this.logger});
+  const AnimeListRepository({required this.graphqlClient, required this.logger, required this.authRepository});
 
   final GraphQLClient graphqlClient;
   final Talker logger;
+  final AuthenticationRepository authRepository;
 
   Future<AnimeList> getAnimeList(String status) async {
     throw UnimplementedError();
   }
-}
 
-/// Implementation of the base interface AnimeListRepository for MyAnimeList
-class MyAnimeListRepositoryImpl implements AnimeListRepository {
-  const MyAnimeListRepositoryImpl({required this.graphqlClient, required this.logger});
-
-  @override
-  final GraphQLClient graphqlClient;
-  @override
-  final Talker logger;
-
-  @override
-  Future<AnimeList> getAnimeList(String status) async {
+  Future<void> saveAnime(Anime anime) async {
     throw UnimplementedError();
   }
 }
-
-/// Implementation of the base interface AnimeListRepository for AniList
-class AniListRepositoryImpl implements AnimeListRepository {
-  const AniListRepositoryImpl({required this.graphqlClient, required this.logger});
-
-  @override
-  final GraphQLClient graphqlClient;
-  @override
-  final Talker logger;
-
-  @override
-  Future<AnimeList> getAnimeList(String status) async {
-    final QueryOptions options = QueryOptions(
-      document: gql(readRepositories),
-      //TODO: inject the username
-      variables: <String, dynamic>{
-        "userName": "JohnCenaSsjBlue",
-        "status": status,
-        //TODO: load both current and rewatching
-      },
-    );
-    try {
-      final QueryResult result = await graphqlClient.query(options);
-
-      if (result.hasException) {
-        logger.error(result.exception.toString());
-        throw result.exception!;
-      }
-
-      var animeLists = result.data?['MediaListCollection']?['lists'];
-      if (animeLists == null || animeLists.isEmpty) {
-        return const AniList(animeList: []);
-      }
-      final List animeList = animeLists[0]['entries'];
-
-      //map the json to the model
-      return AniList(
-        animeList: animeList.map((e) => AniListAnime.fromJson(e)).toList(),
-      );
-    } on PartialDataException catch (e) {
-      // Gestisci l'eccezione in modo specifico per ottenere ulteriori dettagli
-      logger.error("PartialDataException: ${e.path}");
-      // Altri passaggi di gestione dell'eccezione, se necessario...
-      return Future.error(e);
-    } catch (e) {
-      // Gestione di altre eccezioni
-      logger.error("Altro tipo di eccezione: $e");
-      return Future.error(e);
-    }
-  }
-}
-
-String readRepositories =
-    '''
-  query (\$userName: String!, \$status: MediaListStatus) {
-    MediaListCollection (userName: \$userName, type: ANIME, status: \$status) {
-      lists {
-        entries {
-          ...mediaListFragment
-        }
-      }
-    }
-  }
-
-  fragment mediaListFragment on MediaList {
-      id
-      status
-      score(format: POINT_100)
-      progress
-      repeat
-      private
-      notes
-      startedAt { year month day }
-      completedAt { year month day }
-      updatedAt
-    media {
-      ...mediaFragment
-    }
-  }
-
-  fragment mediaFragment on Media {
-      id
-      idMal
-      title {
-      romaji(stylised: true)
-      english(stylised: true)
-      native(stylised: true)
-      userPreferred
-      }
-      format
-      status
-      description
-      startDate { year month day }
-      endDate { year month day }
-      episodes
-      duration
-      countryOfOrigin
-      trailer { id site }
-      updatedAt
-      coverImage { large }
-      genres
-      season
-      seasonYear
-      synonyms
-      averageScore
-      popularity
-      studios { edges { isMain node { name } } }
-      nextAiringEpisode { airingAt episode }
-  }
-''';
