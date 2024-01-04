@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graphql/client.dart';
+import 'package:kurisu/anisthesia.dart';
 import 'package:kurisu/di/dependency_injector.dart';
 import 'package:kurisu/features/anime_list/presentation/pages/anime_list_page.dart';
 import 'package:kurisu/features/sign_in/presentation/bloc/sign_in_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:kurisu/features/sign_in/presentation/pages/sign_in_page.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 
 void main() async {
+  startAnisthesia();
   // ignore: unused_local_variable
   final store = await HiveStore.open(path: 'hive');
   Bloc.observer = TalkerBlocObserver();
@@ -20,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DependencyInjector(
       child: MaterialApp(
+        debugShowCheckedModeBanner: kDebugMode,
         title: 'Kurisu',
         theme: ThemeData(
           useMaterial3: true,
