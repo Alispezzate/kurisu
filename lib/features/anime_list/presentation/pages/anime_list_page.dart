@@ -222,20 +222,30 @@ class _AnimeListPageState extends State<AnimeListPage> {
                                 DataCell(Text(entry.startedAt != null ? entry.startedAt.toString() : '')),
                                 DataCell(Text(entry.completedAt != null ? entry.completedAt.toString() : '')),
                                 DataCell(Text(entry.updatedAt != null ? entry.updatedAt.toString() : '')),
-                                DataCell(Row(children: [
-                                  Text("${entry.progress ?? ''}/${entry.media?.episodes ?? ''}"),
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        increseEpisodesCount(entry);
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.add,
-                                      size: 10,
-                                    ),
-                                  )
-                                ])),
+                                DataCell(
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "${entry.progress ?? ''}/${entry.media?.episodes ?? ''}",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            increseEpisodesCount(entry);
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.add,
+                                          size: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 DataCell(Text(entry.score.toString())),
                                 DataCell(Text(entry.notes ?? '')),
                               ],
