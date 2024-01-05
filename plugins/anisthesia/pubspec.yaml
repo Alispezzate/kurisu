@@ -1,7 +1,7 @@
 name: anisthesia
 description: "A new Flutter FFI plugin project."
 version: 0.0.1
-homepage:
+
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
