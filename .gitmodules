@@ -1,0 +1,3 @@
+[submodule "plugins/anisthesia/src/anisthesia"]
+	path = plugins/anisthesia/src/anisthesia
+	url = https://github.com/Alispezzate/anisthesia
