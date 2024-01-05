@@ -11,7 +11,7 @@ add_library(anisthesia SHARED
 
 set_target_properties(anisthesia PROPERTIES
   LINKER_LANGUAGE CXX
-  PUBLIC_HEADER anisthesia.hpp
+  PUBLIC_HEADER anisthesia.h
   OUTPUT_NAME "anisthesia"
 )
 

@@ -1,24 +1,17 @@
-#pragma once
-
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef ANISTHESIA_H
+#define ANISTHESIA_H
 
 #if _WIN32
+#define FFI_PLUGIN_EXPORT extern "C" __declspec(dllexport)
 #include <windows.h>
 #else
-#include <pthread.h>
-#include <unistd.h>
-#endif
-
-#if _WIN32
-#define FFI_PLUGIN_EXPORT __declspec(dllexport)
-#else
-#define FFI_PLUGIN_EXPORT
+#define FFI_PLUGIN_EXPORT extern "C" __attribute__((visibility("default"))) __attribute__((used))
 #endif
 
 #include "anisthesia/include/anisthesia/media.hpp"
 #include "anisthesia/include/anisthesia/player.hpp" //<anisthesia/player.hpp>
 #include "anisthesia/include/anisthesia/win_platform.hpp" //<anisthesia/win_platform.hpp>
 
-extern "C" FFI_PLUGIN_EXPORT int AnisthesiaInit();
+FFI_PLUGIN_EXPORT int anisthesiaInit();
+
+#endif // ANISTHESIA_H
