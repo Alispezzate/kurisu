@@ -12,22 +12,22 @@ abstract class Anime {
   DateTime? updatedAt;
   Media? media;
 
-  Anime(
-      {
-      // this.sTypename,
-      this.id,
-      this.status,
-      this.score,
-      this.progress,
-      this.repeat,
-      this.private,
-      this.notes,
-      this.startedAt,
-      this.completedAt,
-      this.updatedAt,
-      this.media});
+  Anime({
+    // this.sTypename,
+    this.id,
+    this.status,
+    this.score,
+    this.progress,
+    this.repeat,
+    this.private,
+    this.notes,
+    this.startedAt,
+    this.completedAt,
+    this.updatedAt,
+    this.media,
+  });
 
-  Anime.fromJson(Map<String, dynamic> json) {
+  Anime.fromJson() {
     throw UnimplementedError();
   }
 
@@ -89,26 +89,26 @@ class Media {
 
   Media.fromJson(Map<String, dynamic> json) {
     // sTypename = json['__typename'];
-    id = json['id'];
-    idMal = json['idMal'];
-    title = Title.fromJson(json['title']);
-    format = json['format'];
-    status = json['status'];
-    description = json['description'];
-    startDate = DateTime(json['startDate']?['year'] ?? 0, json['startDate']?['month'] ?? 0, json['startDate']?['day'] ?? 0);
-    endDate = DateTime(json['endDate']?['year'] ?? 0, json['endDate']?['month'] ?? 0, json['endDate']?['day'] ?? 0);
-    episodes = json['episodes'];
-    duration = json['duration'];
-    countryOfOrigin = json['countryOfOrigin'];
-    trailer = Trailer.fromJson(json['trailer'] ?? {});
-    updatedAt = json['updatedAt'];
-    coverImage = CoverImage.fromJson(json['coverImage'] ?? {});
-    genres = json['genres'].cast<String>();
-    synonyms = json['synonyms'].cast<String>();
-    averageScore = json['averageScore'];
-    popularity = json['popularity'];
-    season = json['season'];
-    seasonYear = json['seasonYear'];
+    id = json['id'] as int? ?? 0;
+    idMal = json['idMal'] as int? ?? 0;
+    title = Title.fromJson(json['title'] as Map<String, dynamic>);
+    format = json['format'] as String? ?? '';
+    status = json['status'] as String? ?? '';
+    description = json['description'] as String? ?? '';
+    startDate = DateTime(json['startDate']?['year'] as int? ?? 0, json['startDate']?['month'] as int? ?? 0, json['startDate']?['day'] as int? ?? 0);
+    endDate = DateTime(json['endDate']?['year'] as int? ?? 0, json['endDate']?['month'] as int? ?? 0, json['endDate']?['day'] as int? ?? 0);
+    episodes = json['episodes'] as int? ?? 0;
+    duration = json['duration'] as int? ?? 0;
+    countryOfOrigin = json['countryOfOrigin'] as String? ?? '';
+    trailer = json.containsValue('trailer') ? Trailer.fromJson(json['trailer'] as Map<String, dynamic>) : null;
+    updatedAt = json['updatedAt'] as int? ?? 0;
+    coverImage = CoverImage.fromJson(json['coverImage'] as Map<String, dynamic>);
+    genres = json['genres'].cast<String>() as List<String>? ?? <String>[];
+    synonyms = json['synonyms'].cast<String>() as List<String>? ?? <String>[];
+    averageScore = json['averageScore'] as int? ?? 0;
+    popularity = json['popularity'] as int? ?? 0;
+    season = json['season'] as String? ?? '';
+    seasonYear = json['seasonYear'] as int? ?? 0;
     // studios = json['studios'] != null ? Studios.fromJson(json['studios']) : null;
     // nextAiringEpisode = json['nextAiringEpisode'];
   }
@@ -161,20 +161,20 @@ class Title {
   String? native;
   String? userPreferred;
 
-  Title(
-      {
-      // this.sTypename,
-      this.romaji,
-      this.english,
-      this.native,
-      this.userPreferred});
+  Title({
+    // this.sTypename,
+    this.romaji,
+    this.english,
+    this.native,
+    this.userPreferred,
+  });
 
   Title.fromJson(Map<String, dynamic> json) {
     // sTypename = json['__typename'];
-    romaji = json['romaji'];
-    english = json['english'];
-    native = json['native'];
-    userPreferred = json['userPreferred'];
+    romaji = json['romaji'] as String? ?? '';
+    english = json['english'] as String? ?? '';
+    native = json['native'] as String? ?? '';
+    userPreferred = json['userPreferred'] as String? ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -193,16 +193,16 @@ class Trailer {
   String? id;
   String? site;
 
-  Trailer(
-      {
-      // this.sTypename,
-      this.id,
-      this.site});
+  Trailer({
+    // this.sTypename,
+    this.id,
+    this.site,
+  });
 
   Trailer.fromJson(Map<String, dynamic> json) {
     // sTypename = json['__typename'];
-    id = json['id'];
-    site = json['site'];
+    id = json['id'] as String? ?? '';
+    site = json['site'] as String? ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -218,14 +218,14 @@ class CoverImage {
   // String? sTypename;
   String? large;
 
-  CoverImage(
-      {
-      // this.sTypename,
-      this.large});
+  CoverImage({
+    // this.sTypename,
+    this.large,
+  });
 
   CoverImage.fromJson(Map<String, dynamic> json) {
     // sTypename = json['__typename'];
-    large = json['large'];
+    large = json['large'] as String? ?? '';
   }
 
   Map<String, dynamic> toJson() {

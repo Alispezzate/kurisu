@@ -9,8 +9,6 @@ final List<BlocProvider> _blocs = [
   ),
   //SignInBloc
   BlocProvider<SignInBloc>(
-    create: (context) => SignInBloc(
-      authenticationRepository: context.read<AuthenticationRepository>(),
-    ),
+    create: (context) => SignInBloc(authenticationRepository: context.read())..check(),
   ),
 ];

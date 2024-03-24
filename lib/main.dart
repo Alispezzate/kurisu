@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
                 title: 'Kurisu',
               );
             }
-            return const SignInPage();
+            return SignInPage();
           },
         ),
       ),

@@ -6,6 +6,9 @@ final List<RepositoryProvider> _repositories = [
   ),
   RepositoryProvider<AnimeListRepository>(
     create: (context) => AniListRepositoryImpl(
-        graphqlClient: context.read<GraphQLClient>(), logger: context.read<Talker>(), authRepository: context.read<AuthenticationRepository>()),
+      graphqlClient: context.read<GraphQLClient>(),
+      logger: context.read<Talker>(),
+      authRepository: context.read<AuthenticationRepository>(),
+    ),
   ),
 ];

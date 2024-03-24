@@ -1,7 +1,7 @@
 //define anilist implementation
-import 'anilist_anime.dart';
-import 'anime.dart';
-import 'anime_list.dart';
+import 'package:kurisu/features/anime_list/data/models/anilist_anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime_list.dart';
 
 class AniList implements AnimeList {
   const AniList({required this.animeList});

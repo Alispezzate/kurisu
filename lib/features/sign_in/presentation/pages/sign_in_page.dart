@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kurisu/consts.dart';
 import 'package:kurisu/features/anime_list/presentation/pages/anime_list_page.dart';
+import 'package:kurisu/features/sign_in/presentation/bloc/sign_in_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../consts.dart';
-import '../bloc/sign_in_bloc.dart';
-
 /// Enter the SignIn documentation here
-class SignInPage extends StatefulWidget {
-  /// The constructor of the page.
-  const SignInPage({super.key});
+class SignInPage extends StatelessWidget {
+  final TextEditingController tokenTextController = TextEditingController();
+  final TextEditingController userNameTextController = TextEditingController();
 
-  @override
-  State<SignInPage> createState() => _SignInState();
-}
-
-class _SignInState extends State<SignInPage> {
-  TextEditingController tokenTextController = TextEditingController();
-  TextEditingController userNameTextController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<SignInBloc>(context).check();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  //build the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,14 +49,14 @@ class _SignInState extends State<SignInPage> {
     );
   }
 
-  redirectToLogin() async {
-    Uri url = Uri.parse(anilistLoginUrl);
+  Future<void> redirectToLogin() async {
+    final Uri url = Uri.parse(anilistLoginUrl);
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
     }
   }
 
-  saveToken(BuildContext context) async {
+  Future<void> saveToken(BuildContext context) async {
     BlocProvider.of<SignInBloc>(context).perform(tokenTextController.text, userNameTextController.text);
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AnimeListPage(title: 'Kurisu')));
   }

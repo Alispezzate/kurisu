@@ -12,7 +12,7 @@ part of 'anime_list_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AnimeListEvent {
@@ -229,10 +229,10 @@ class __$$SaveAnimeEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? anime = freezed,
+    Object? anime = null,
   }) {
     return _then(_$SaveAnimeEventImpl(
-      freezed == anime
+      null == anime
           ? _value.anime
           : anime // ignore: cast_nullable_to_non_nullable
               as Anime,
@@ -258,12 +258,11 @@ class _$SaveAnimeEventImpl implements SaveAnimeEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SaveAnimeEventImpl &&
-            const DeepCollectionEquality().equals(other.anime, anime));
+            (identical(other.anime, anime) || other.anime == anime));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(anime));
+  int get hashCode => Object.hash(runtimeType, anime);
 
   @JsonKey(ignore: true)
   @override

@@ -1,14 +1,12 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:async';
 
-import '../../data/repositories/authentication_repository.dart';
-
-part 'sign_in_event.dart';
-
-part 'sign_in_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kurisu/features/sign_in/data/repositories/authentication_repository.dart';
 
 part 'sign_in_bloc.freezed.dart';
+part 'sign_in_event.dart';
+part 'sign_in_state.dart';
 
 /// The SignInBloc
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
@@ -48,7 +46,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     emit(const SignInState.performing());
 
     try {
-      bool isSignedIn = await authenticationRepository.isSignedIn();
+      final bool isSignedIn = await authenticationRepository.isSignedIn();
       if (isSignedIn) {
         emit(const SignInState.performed());
       } else {

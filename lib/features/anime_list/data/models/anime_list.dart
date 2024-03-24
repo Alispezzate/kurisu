@@ -1,4 +1,4 @@
-import 'anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime.dart';
 
 abstract class AnimeList {
   const AnimeList({required this.animeList});
@@ -11,7 +11,7 @@ abstract class AnimeList {
   }
 
   //define from json method
-  factory AnimeList.fromJson(Map<String, dynamic> json) {
+  factory AnimeList.fromJson() {
     throw UnimplementedError();
   }
 }

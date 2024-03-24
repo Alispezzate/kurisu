@@ -1,12 +1,11 @@
 import 'package:graphql/client.dart';
+import 'package:kurisu/features/anime_list/data/models/anilist_anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anilist_anime_list.dart';
 import 'package:kurisu/features/anime_list/data/models/anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime_list.dart';
+import 'package:kurisu/features/anime_list/data/repositories/anime_list_repository.dart';
+import 'package:kurisu/features/sign_in/data/repositories/authentication_repository.dart';
 import 'package:talker/talker.dart';
-
-import '../../../sign_in/data/repositories/authentication_repository.dart';
-import '../models/anilist_anime.dart';
-import '../models/anilist_anime_list.dart';
-import '../models/anime_list.dart';
-import 'anime_list_repository.dart';
 
 /// Implementation of the base interface AnimeListRepository for AniList
 class AniListRepositoryImpl implements AnimeListRepository {
@@ -39,16 +38,16 @@ class AniListRepositoryImpl implements AnimeListRepository {
         throw result.exception!;
       }
 
-      var animeLists = result.data?['MediaListCollection']?['lists'];
-      if (animeLists == null || animeLists.isEmpty) {
+      final List animeList = result.data?['MediaListCollection']?['lists'][0]['entries'] as List;
+      if (animeList.isEmpty) {
         return const AniList(animeList: []);
       }
-      final List animeList = animeLists[0]['entries'];
 
       //map the json to the model
       return AniList(
-        animeList: animeList.map((e) => AniListAnime.fromJson(e)).toList(),
+        animeList: List<AniListAnime>.from(animeList.map((dynamic json) => AniListAnime.fromJson(json as Map<String, dynamic>))),
       );
+      // return AniList(animeList: []);
     } on PartialDataException catch (e) {
       logger.error("PartialDataException: ${e.path}");
       return Future.error(e);
@@ -84,7 +83,8 @@ class AniListRepositoryImpl implements AnimeListRepository {
   }
 }
 
-String saveAnimeQuery = '''//TODO: move graphql queries to a separate file
+//TODO: move graphql queries to a separate file
+String saveAnimeQuery = '''
 mutation (
     \$id: Int,
     \$mediaId: Int,

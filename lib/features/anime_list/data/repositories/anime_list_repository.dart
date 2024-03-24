@@ -1,9 +1,8 @@
 import 'package:graphql/client.dart';
+import 'package:kurisu/features/anime_list/data/models/anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime_list.dart';
+import 'package:kurisu/features/sign_in/data/repositories/authentication_repository.dart';
 import 'package:talker/talker.dart';
-
-import '../../../sign_in/data/repositories/authentication_repository.dart';
-import '../models/anime.dart';
-import '../models/anime_list.dart';
 
 /// Abstract class of AnimeListRepository
 abstract class AnimeListRepository {

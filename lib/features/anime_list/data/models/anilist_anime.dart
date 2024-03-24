@@ -1,5 +1,5 @@
 //define anilist implementation
-import 'anime.dart';
+import 'package:kurisu/features/anime_list/data/models/anime.dart';
 
 class AniListAnime implements Anime {
   @override
@@ -64,22 +64,23 @@ class AniListAnime implements Anime {
 
   AniListAnime.fromJson(Map<String, dynamic> json) {
     // sTypename = json['__typename'];
-    id = json['id'];
-    status = json['status'];
-    score = json['score'];
-    progress = json['progress'];
-    repeat = json['repeat'];
-    private = json['private'];
-    notes = json['notes'];
+    id = json['id'] as int?;
+    status = json['status'] as String?;
+    score = json['score'] as int?;
+    progress = json['progress'] as int?;
+    repeat = json['repeat'] as int?;
+    private = json['private'] as bool?;
+    notes = json['notes'] as String?;
     startedAt = json['startedAt']?['year'] != null && json['startedAt']?['month'] != null && json['startedAt']?['day'] != null
-        ? DateTime(json['startedAt']?['year'] ?? 0, json['startedAt']?['month'] ?? 0, json['startedAt']?['day'] ?? 0)
+        ? DateTime(json['startedAt']?['year'] as int? ?? 0, json['startedAt']?['month'] as int? ?? 0, json['startedAt']?['day'] as int? ?? 0)
         : null;
     completedAt = json['completedAt']?['year'] != null && json['completedAt']?['month'] != null && json['completedAt']?['day'] != null
-        ? DateTime(json['completedAt']?['year'] ?? 0, json['completedAt']?['month'] ?? 0, json['completedAt']?['day'] ?? 0)
+        ? DateTime(json['completedAt']?['year'] as int? ?? 0, json['completedAt']?['month'] as int? ?? 0, json['completedAt']?['day'] as int? ?? 0)
         : null;
     //convert from second since epoch to datetime
-    updatedAt =
-        json['updatedAt'] != null && json['updatedAt'] is int && json['updatedAt'] > 0 ? DateTime.fromMillisecondsSinceEpoch(json['updatedAt'] * 1000) : null;
-    media = Media.fromJson(json['media'] ?? {});
+    updatedAt = (json['updatedAt'] != null && json['updatedAt'] is int && json['updatedAt'] as int > 0)
+        ? DateTime.fromMillisecondsSinceEpoch((json['updatedAt'] as int) * 1000)
+        : null;
+    media = Media.fromJson(json['media'] as Map<String, dynamic>);
   }
 }
